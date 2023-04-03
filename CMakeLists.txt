@@ -18,7 +18,7 @@ include_directories(${imgui_INCLUDE_DIR})
 #add manually added libraries
 add_subdirectory(lib)
 
-
+#create the executable
 add_executable(downloadManager src/main.cpp)
 
 if(WIN32)
@@ -28,13 +28,11 @@ if(WIN32)
             ${imgui_LIBRARIES}
             imgui_backends
             glad
-            wsock32
-            )
+            wsock32)
 else()
     target_link_libraries(downloadManager
             ${Boost_LIBRARIES}
             ${glfw3_LIBRARIES}
-            ${imgui_LIBRARIES}
-            )
+            ${imgui_LIBRARIES})
 endif()
 
