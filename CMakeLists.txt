@@ -19,7 +19,7 @@ include_directories(${imgui_INCLUDE_DIR})
 add_subdirectory(lib)
 
 #create the executable
-add_executable(downloadManager src/main.cpp)
+add_executable(downloadManager src/main.cpp src/core/application.cpp src/core/application.h src/ui/ui.cpp src/ui/ui.h src/model/image_container.h)
 
 if(WIN32)
     target_link_libraries(downloadManager
