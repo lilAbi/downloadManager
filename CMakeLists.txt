@@ -18,6 +18,15 @@ include_directories(${imgui_INCLUDE_DIR})
 #add manually added libraries
 add_subdirectory(lib)
 
+#include src directory
+include_directories(src)
+
+#build src files
+file(GLOB SRC_FILES CONFIGURE_DEPENDS   ${PROJECT_SOURCE_DIR}/src/main.cpp
+                                        ${PROJECT_SOURCE_DIR}/src/model/*.cpp
+                                        ${PROJECT_SOURCE_DIR}/src/core/*.cpp
+                                        ${PROJECT_SOURCE_DIR}/src/ui/*.cpp)
+
 #create the executable
 add_executable(downloadManager src/main.cpp src/core/application.cpp src/core/application.h src/ui/ui.cpp src/ui/ui.h src/model/image_container.h)
 
