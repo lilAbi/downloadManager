@@ -3,13 +3,17 @@
 #define DOWNLOADMANAGER_APPLICATION_H
 
 
+
+
 namespace core {
 
     class Application {
     public:
-
         Application() = default;
         ~Application() = default;
+
+        //initialize sub system functions
+        bool Init();
 
         //run the whole application loop
         void Run();
