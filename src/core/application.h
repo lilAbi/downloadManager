@@ -14,12 +14,13 @@
  * Should contain everything
  */
 
+//downloading application that shows extra information
+
 class Application {
 public:
     Application();
     ~Application();
 
-    static Application& GetAppInstance();
     bool Init();
     void Run();
     void CleanUp();
@@ -27,10 +28,7 @@ public:
 private:
     Window          window;
     ApplicationGUI  ui;
-    std::thread     downloaderThread;
-    DownloadQueue   downloadQueue;
 };
 
-extern Application* appInstance;
 
 #endif //DOWNLOADMANAGER_APPLICATION_H

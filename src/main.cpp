@@ -11,12 +11,12 @@ int main() {
     srand((unsigned) time(nullptr));
 
     //construct a new downlaoder manager application
-    std::unique_ptr<Application> downloadManagerApp = std::make_unique<Application>();
+    std::unique_ptr<Application> app = std::make_unique<Application>();
     //initialize the application and make it ready to run
-    bool isAppReadyToRun = downloadManagerApp->Init();
+    bool isAppReadyToRun = app->Init();
 
     if(isAppReadyToRun){
-        downloadManagerApp->Run();
+        app->Run();
     }
 
     return 0;

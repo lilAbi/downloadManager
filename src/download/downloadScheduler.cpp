@@ -2,5 +2,5 @@
 
 void DownloadScheduler::operator()() {
 
-    //should lood
+    return;
 }

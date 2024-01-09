@@ -12,10 +12,9 @@ class ImGuiExample(ConanFile):
     # generators = "CMakeDeps", "CMakeToolchain"
 
     def requirements(self):
-        self.requires("imgui/1.89.4")
+        self.requires("imgui/cci.20230105+1.89.2.docking")
         self.requires("glfw/3.3.8")
         self.requires("glad/0.1.36")
-        # self.requires("libcurl/8.2.0")
 
     def generate(self):
         toolchain = CMakeToolchain(self)

@@ -9,6 +9,12 @@
 
 
 //make these static functions?
+//static functions to draw "ui elements"
+
+
+static void ShowDownloadUI(bool* shouldWindowBeOpen);
+static void ShowAboutUI();
+static void ShowLicenseUI();
 
 class ApplicationGUI {
 public:
@@ -21,6 +27,7 @@ public:
     void CleanUp();
 
 private:
+    Window* localWindowPtr;
 
 };
 

@@ -5,7 +5,7 @@ struct Task;
 
 using JobFunction = void (*) (Task*, const void*);
 
-struct Task{
+class Task{
     JobFunction function;
 };
 

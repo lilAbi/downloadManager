@@ -15,12 +15,12 @@ public:
 
     std::shared_ptr<GLFWwindow> GetWindowPtr() {return windowPtr;}
 
+public:
+    int windowWidth{1080};
+    int windowHeight{720};
 private:
     //handle to a glfw window object
     std::shared_ptr<GLFWwindow> windowPtr{nullptr};
-    //window width and height
-    int windowWidth{1080};
-    int windowHeight{720};
 };
 
 
