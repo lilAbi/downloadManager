@@ -13,8 +13,8 @@
 
 
 static void ShowDownloadUI(bool* shouldWindowBeOpen);
-static void ShowAboutUI();
-static void ShowLicenseUI();
+static void ShowAboutUI(bool* shouldAboutUI);
+static void ShowLicenseUI(bool* shouldLicenseUI);
 
 class ApplicationGUI {
 public:

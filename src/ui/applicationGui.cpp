@@ -1,4 +1,5 @@
 #include "applicationGui.h"
+#include "utility/utility.h"
 
 bool ApplicationGUI::InitGUI(Window& windowPtr) {
 
@@ -30,7 +31,14 @@ void ApplicationGUI::DrawUI() {
     static bool showAboutWindowFlag{false};
     static bool showDownloadWindowFlag{false};
 
-    //Only 1 Window
+
+    //draw additional windows
+    if(showDownloadWindowFlag) ShowDownloadUI(&showDownloadWindowFlag);
+    if(showAboutWindowFlag) ShowAboutUI(&showAboutWindowFlag);
+    if(showLicenseWindowFlag) ShowLicenseUI(&showLicenseWindowFlag);
+
+
+    //Window containing ui elements to enter a link and download it
     ImGui::SetNextWindowPos(ImVec2(0,0));
     ImGui::SetNextWindowSize(ImVec2(static_cast<float>(localWindowPtr->windowWidth), static_cast<float>(localWindowPtr->windowHeight)));
 
@@ -40,10 +48,6 @@ void ApplicationGUI::DrawUI() {
 
 
     ImGui::Begin("Main Window", nullptr, windowFlags); //Main Window Start
-
-    if(showDownloadWindowFlag) ShowDownloadUI(&showDownloadWindowFlag);
-    if(showAboutWindowFlag) ShowAboutUI();
-    if(showLicenseWindowFlag) ShowLicenseUI();
 
     //draw menu bar
     if(ImGui::BeginMenuBar()){
@@ -55,8 +59,8 @@ void ApplicationGUI::DrawUI() {
         }
 
         if(ImGui::BeginMenu("Help")){
-            ImGui::MenuItem("About");   //general about information of the project
-            ImGui::MenuItem("License"); //general license information
+            ImGui::MenuItem("About", nullptr, &showAboutWindowFlag);   //general about information of the project
+            ImGui::MenuItem("License", nullptr, &showLicenseWindowFlag); //general license information
             ImGui::EndMenu();
         }
 
@@ -66,6 +70,7 @@ void ApplicationGUI::DrawUI() {
     ImGui::Text("dear imgui says hello! (%s) (%d)", IMGUI_VERSION, IMGUI_VERSION_NUM);
 
     ImGui::End(); //Main Window End
+
 
 }
 
@@ -80,13 +85,39 @@ void ApplicationGUI::CleanUp() {
     ImGui::DestroyContext();
 }
 
+//USER DEFINED WINDOWS
+
 static void ShowDownloadUI(bool* shouldWindowBeOpen){
-}
-
-static void ShowAboutUI(){
 
 }
 
-static void ShowLicenseUI(){
+static void ShowAboutUI(bool* shouldAboutUI){
+
+    ImGui::SetNextWindowSize(ImVec2(0.0, 0.0), ImGuiCond_FirstUseEver);
+    if(!ImGui::Begin("About Window", shouldAboutUI, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar)){
+        ImGui::End();
+        return;
+    }
+
+    ImGui::TextWrapped("This piece of software is designed to optimize your downloads while informing whats going on under the hood.");
+
+    ImGui::End();
+}
+
+static void ShowLicenseUI(bool* shouldLicenseUI){
+    ImGui::SetNextWindowSize(ImVec2(0.0, 0.0), ImGuiCond_FirstUseEver);
+    if(!ImGui::Begin("About Window", shouldLicenseUI, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar)){
+        ImGui::End();
+        return;
+    }
+
+    //TODO: load the buffer once when this function is open
+    //lazy load the licenses from file into a string buffer
+    std::string buffer = FromFileIntoStringBuffer(R"(C:\Users\Abi\CLionProjects\downloadManager\resources\notARealLicenses.txt)");
+
+    ///using imgui display the string buffer
+    ImGui::TextUnformatted(buffer.data(), (buffer.data() + buffer.size()));
+
+    ImGui::End();
 
 }
