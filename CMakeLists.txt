@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 include_directories(src)
+include_directories(bindings)
 
 find_package(glfw3 REQUIRED)
 find_package(imgui REQUIRED)
@@ -23,7 +24,9 @@ include_directories(
 
 file(GLOB sources CONFIGURE_DEPENDS
         "src/main.cpp"
-        "src/*/*.cpp"
+        "src/core/*.cpp"
+        "src/ui/*.cpp"
+        "src/window/*.cpp"
         "bindings/*.cpp"
 )
 

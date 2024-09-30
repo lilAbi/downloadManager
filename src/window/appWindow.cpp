@@ -39,7 +39,7 @@ bool AppWindow::init() {
     glfwSetFramebufferSizeCallback(windowPtr.get(), FrameBufferSizeCallback);
     glfwSetCursorPosCallback(windowPtr.get(), CursorPosCallback);
 
-    glfwSetInputMode(windowPtr.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(windowPtr.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     //initialize glad
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){

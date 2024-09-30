@@ -26,8 +26,9 @@ private:
 public:
     bool init();
     std::shared_ptr<GLFWwindow> getWindowPtr(){return windowPtr;}
-    void setWindowSize(int w, int h) {};
+    void setWindowSize(int w, int h) { width = w; height = h;};
     void setMousePosition(float x, float y) {};
+    std::pair<int,int> getScreenSize() { return {width, height};}
 
 public:
 #ifdef __APPLE__
