@@ -19,13 +19,11 @@ class ImGuiExample(ConanFile):
     def generate(self):
         toolchain = CMakeToolchain(self)
         dependencies = CMakeDeps(self)
-        copy(self, "*glfw*", os.path.join(self.dependencies["imgui"].package_folder, "res", "bindings"),
-             os.path.join(self.source_folder, "bindings"))
-        copy(self, "*opengl3*", os.path.join(self.dependencies["imgui"].package_folder, "res", "bindings"),
-             os.path.join(self.source_folder, "bindings"))
+        copy(self, "*glfw*", os.path.join(self.dependencies["imgui"].package_folder, "res", "bindings"), os.path.join(self.source_folder, "bindings"))
+        copy(self, "*opengl3*", os.path.join(self.dependencies["imgui"].package_folder, "res", "bindings"), os.path.join(self.source_folder, "bindings"))
+        copy(self, "*imgui_stdlib*", os.path.join(self.dependencies["imgui"].package_folder, "res", "misc", "cpp"), os.path.join(self.source_folder, "bindings"))
         toolchain.generate()
         dependencies.generate()
-
     def configure(self):
         self.options["glad"].spec = "gl"
         self.options["glad"].gl_profile = "core"

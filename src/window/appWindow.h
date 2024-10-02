@@ -11,7 +11,8 @@
 #include <memory>
 
 
-static void frameBufferSizeCallback(GLFWwindow* window, int width, int height);
+static void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
+static void AppWindowSizeCallback(GLFWwindow* window, int width, int height);
 
 //todo: this class will attempt to destroy the
 class AppWindow {
@@ -33,6 +34,7 @@ public:
 public:
 #ifdef __APPLE__
     int width{1920/2}, height{1080/2};
+    int framebufferWidth{}, framebufferHeight{};
 #else
     int width{1920}, height{1080};
 #endif

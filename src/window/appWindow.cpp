@@ -2,14 +2,20 @@
 
 static void FrameBufferSizeCallback(GLFWwindow* window, int width, int height){
     if(auto* handle{reinterpret_cast<AppWindow*>(glfwGetWindowUserPointer(window))}; handle){
-        handle->setWindowSize(width, height);
+        spdlog::critical("framebuffer width {} height {}", width, height);
         glViewport(0, 0, width, height);
     }
 }
 
-static void CursorPosCallback(GLFWwindow* window, double xposIn, double yposIn){
+static void AppWindowSizeCallback(GLFWwindow* window, int width, int height){
     if(auto* handle{reinterpret_cast<AppWindow*>(glfwGetWindowUserPointer(window))}; handle){
-        handle->setMousePosition(static_cast<float>(xposIn), static_cast<float>(yposIn));
+        spdlog::critical("window width {} height {}", width, height);
+
+        if(width < 1920/2 || height < 1080/2){
+            glfwSetWindowSize(window, 1920/2, 1080/2);
+        }
+
+        handle->setWindowSize(width, height);
     }
 }
 
@@ -37,9 +43,11 @@ bool AppWindow::init() {
     glfwMakeContextCurrent(windowPtr.get());
     glfwSetWindowUserPointer(windowPtr.get(), reinterpret_cast<void*>(this));
     glfwSetFramebufferSizeCallback(windowPtr.get(), FrameBufferSizeCallback);
-    glfwSetCursorPosCallback(windowPtr.get(), CursorPosCallback);
-
+    glfwSetWindowSizeCallback(windowPtr.get(), AppWindowSizeCallback);
     //glfwSetInputMode(windowPtr.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    glfwGetFramebufferSize(windowPtr.get(), &framebufferWidth, &framebufferHeight);
+    spdlog::info("starting framebuffer size width {} height {}", framebufferWidth, framebufferHeight);
 
     //initialize glad
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){

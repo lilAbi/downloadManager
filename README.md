@@ -11,3 +11,6 @@ conan install . --output-folder=<cmake/build/directory>/build --build=missing
 -DCMAKE_TOOLCHAIN_FILE=<cmake/build/directory>/build/Release/generators/conan_toolchain.cmake
 
 3. run cmake and build app
+
+Last thing to do:
+
