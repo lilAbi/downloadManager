@@ -2,8 +2,17 @@
 
 static void FrameBufferSizeCallback(GLFWwindow* window, int width, int height){
     if(auto* handle{reinterpret_cast<AppWindow*>(glfwGetWindowUserPointer(window))}; handle){
-        spdlog::critical("framebuffer width {} height {}", width, height);
-        glViewport(0, 0, width, height);
+        //spdlog::critical("framebuffer width {} height {}", width, height);
+
+        if(handle->framebufferWidth > width || handle->framebufferHeight > height){
+            spdlog::critical("framebuffer default");
+            glViewport(0, 0, handle->framebufferWidth, handle->framebufferHeight);
+        } else {
+            spdlog::critical("framebuffer size width {} height {}", width, height);
+            spdlog::critical("framebuffer basic");
+            glViewport(0, 0, width, height);
+        }
+
     }
 }
 
@@ -16,6 +25,8 @@ static void AppWindowSizeCallback(GLFWwindow* window, int width, int height){
         }
 
         handle->setWindowSize(width, height);
+
+        //call a redraw
     }
 }
 

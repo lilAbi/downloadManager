@@ -26,7 +26,6 @@ void Ui::startUIFrame() {
 }
 
 void Ui::drawUi(std::pair<int,int> screenSize) {
-    //spdlog::info("Window size is {} {}", screenSize.first, screenSize.second);
     //background window pane ------------------------------------------------------------------------------------------
     ImGui::SetNextWindowPos(ImVec2(0.0f,0.0f));
     ImGui::SetNextWindowSize(ImVec2(screenSize.first, screenSize.second));
@@ -34,6 +33,8 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     ImGuiWindowFlags background = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs;
     ImGui::Begin("Background", nullptr, background);
     ImGui::End(); //end of background window pane --------------------------------------------------------------------
+
+
 
     //toolbar window pane --------------------------------------------------------------------------------------------
     ImGui::SetNextWindowPos(ImVec2(0.0f,0.0f));
@@ -78,6 +79,8 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     }
     ImGui::End(); //end of toolbar window pane ---------------------------------------------------------------------------
 
+
+
     //download list window pane ------------------------------------------------------------------------------------------
     ImGui::SetNextWindowPos(ImVec2(0.0f,125.0f));
     ImGui::SetNextWindowSize(ImVec2(screenSize.first, screenSize.second - 125.0f - 20.0f));
@@ -86,11 +89,13 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     ImGui::Begin("downloadList", nullptr, downloadList);
     ImGui::End(); //end of download list window pane ---------------------------------------------------------------------
 
+
+
     //bottom tool bar list window pane ------------------------------------------------------------------------------------------
     ImGui::SetNextWindowPos(ImVec2(0.0f, screenSize.second - 20.0f));
     ImGui::SetNextWindowSize(ImVec2(screenSize.first, 20.0f));
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.2f, 0.5f, 0.9f, 1.0f));
-    ImGuiWindowFlags bottomToolbar = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs;
+    ImGuiWindowFlags bottomToolbar = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration;
     ImGui::Begin("bottomToolbar", nullptr, bottomToolbar);
 
     static std::string speedText{"2.248 mb/s"};
@@ -98,9 +103,12 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     ImGui::SetNextItemWidth(75.0f);
     ImGui::InputText("", &speedText);
 
-    ImGui::End(); //end of download list window pane ---------------------------------------------------------------------
+    ImGui::SetCursorScreenPos(ImVec2(screenSize.first - 70.0f, screenSize.second - 20.0f));
+    if(ImGui::Button("Settings", ImVec2(70, 20))){
 
+    }
 
+    ImGui::End(); //end of bottom toolbar window pane ---------------------------------------------------------------------
 
 
 }
