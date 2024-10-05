@@ -87,6 +87,49 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.5f, 0.1f, 0.3f, 1.0f));
     ImGuiWindowFlags downloadList = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs;
     ImGui::Begin("downloadList", nullptr, downloadList);
+
+    //based of a "metadata list" that object gets iterated through
+    ImGui::SetNextWindowPos(ImVec2(0.0f + 15.0f, 125.0f + 15.0f));
+    ImGui::SetNextWindowSize(ImVec2(screenSize.first - 30.0f, screenSize.second - 125.0f - 20.0f - 30.0f));
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.8f, 0.4f, 0.9f, 1.0f));
+    ImGuiWindowFlags downloadListContentWindow = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs;
+    ImGui::Begin("downloadListContentWindow", nullptr, downloadListContentWindow);
+
+    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.2f, 0.3f, 0.4f, 1.0f));
+    ImGui::BeginChild("Toolbar", ImVec2(0, 30.0f), 0, 0);
+    ImGui::EndChild();
+    ImGui::BeginChild("ScrollArea", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+    static std::vector<std::pair<std::string,float>> downloads = {{"File1.zip", 0.5f}, {"File2.zip", 0.75f}};
+    for(auto& download : downloads){
+
+        ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.9f, 0.3f, 0.1f, 1.0f));
+        std::string childLabel = download.first + "-child";
+        ImGui::BeginChild(childLabel.c_str(), ImVec2(0, 80.0f), 0, 0);
+
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
+
+        bool checkbox = true;
+        std::string checkboxLabel = download.first + "-checkbox";
+        ImGui::Checkbox(childLabel.c_str(), &checkbox);
+
+        ImGui::SameLine(0, 100.0f);
+
+        ImGui::SetNextItemWidth(200.0f);
+        std::string inputTextLabel = download.first + "-textbox";
+        ImGui::InputText(inputTextLabel.c_str(), &download.first);
+
+        ImGui::SameLine(0, 100.0f);
+        ImGui::ProgressBar(-1.0f * (float)ImGui::GetTime(), ImVec2(-FLT_MIN, 0),  "Downloading..");
+
+        ImGui::EndChild();
+
+    }
+
+    ImGui::EndChild();
+
+    ImGui::End();
+
     ImGui::End(); //end of download list window pane ---------------------------------------------------------------------
 
 
