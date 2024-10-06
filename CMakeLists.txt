@@ -27,6 +27,7 @@ file(GLOB sources CONFIGURE_DEPENDS
         "src/core/*.cpp"
         "src/ui/*.cpp"
         "src/window/*.cpp"
+        "src/download/*.cpp"
         "bindings/*.cpp"
 )
 
