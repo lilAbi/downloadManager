@@ -8,10 +8,13 @@
 //orchestrates the downloading system.
 class DownloadManager {
 public:
-    DownloadManager() = default;
+    DownloadManager(){
+        auto* ptr = &downloadQueue;
+        spdlog::info("task queue ptr {}", fmt::ptr(ptr));
+    };
     ~DownloadManager() = default;
 private:
-    ThreadSafeQueue<DownloadTask> downloadQueue;
+    ThreadSafeQueue<DownloadTask> downloadQueue{};
     ThreadPool threadPool{downloadQueue};
     //TaskSchedular DownloadQueue;
     //ThreadSafe Downloadabel queue;

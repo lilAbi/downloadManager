@@ -14,7 +14,6 @@ private:
     std::vector<std::thread> threads{};
     JoinThreads joinThreads{threads};
     std::atomic_bool done{false};
-
 };
 
 

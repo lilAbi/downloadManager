@@ -1,5 +1,3 @@
-
-
 #ifndef DOWNLOADMANAGER_DOWNLOADWORKER_H
 #define DOWNLOADMANAGER_DOWNLOADWORKER_H
 
@@ -19,6 +17,7 @@ public:
 private:
     ThreadSafeQueue<DownloadTask>& globalTaskQueue;
     std::atomic_bool& done;
+    inline static int workerNum{0};
 };
 
 

@@ -8,14 +8,15 @@ enum class DownloadStatus {
     DOWNLOADING,
     PAUSED,
     FINISHED,
-    FAILED
+    FAILED,
+    ERROR
 };
 
 struct DownloadTask{
     std::string url;
     std::string outputPath;
     float progress;
-    DownloadStatus status{DownloadStatus::FAILED};
+    DownloadStatus status{DownloadStatus::ERROR};
 };
 
 
