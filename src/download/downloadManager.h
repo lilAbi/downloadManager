@@ -13,6 +13,11 @@ public:
         spdlog::info("task queue ptr {}", fmt::ptr(ptr));
     };
     ~DownloadManager() = default;
+
+    void shutdown(){
+        downloadQueue.terminate();
+    };
+
 private:
     ThreadSafeQueue<DownloadTask> downloadQueue{};
     ThreadPool threadPool{downloadQueue};

@@ -11,17 +11,22 @@ template<typename T>
 class ThreadSafeQueue {
 public:
     ThreadSafeQueue() = default;
-    ~ThreadSafeQueue() =  default;
+    ~ThreadSafeQueue() = default;
 
     void push(T value);
 
     void waitAndPop(T& value);
+    void waitAndPop(T& value, std::atomic<bool>& doneFlag);
     std::shared_ptr<T> waitAndPop();
 
     bool tryPop(T& value);
     std::shared_ptr<T> tryPop();
 
     bool empty();
+
+    void terminate(){
+        conditionVariable.notify_all();
+    }
 
 private:
     mutable std::mutex mutex;
@@ -40,6 +45,15 @@ template<typename T>
 void ThreadSafeQueue<T>::waitAndPop(T &value) {
     std::unique_lock<std::mutex> lock{mutex};
     conditionVariable.wait(lock, [this]{return !queue.empty();});
+    value = std::move(queue.front());
+    queue.pop();
+}
+
+template<typename T>
+void ThreadSafeQueue<T>::waitAndPop(T &value, std::atomic<bool>& doneFlag) {
+    std::unique_lock<std::mutex> lock{mutex};
+    conditionVariable.wait(lock, [&, this]{return ( doneFlag || !queue.empty());});
+    if(doneFlag) return;
     value = std::move(queue.front());
     queue.pop();
 }

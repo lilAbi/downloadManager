@@ -45,6 +45,7 @@ void Application::run() {
     }
 
     ui.cleanUp();
+    downloadManager.shutdown();
 }
 
 void Application::processInput() {

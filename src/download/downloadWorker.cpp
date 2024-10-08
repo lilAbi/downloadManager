@@ -15,7 +15,7 @@ void DownloadWorker::operator()() {
         spdlog::info("work loop start on worker thread {}", localWorkerId);
 
         DownloadTask task;
-        globalTaskQueue.waitAndPop(task);
+        globalTaskQueue.waitAndPop(task, done);
 
         if(task.status == DownloadStatus::ERROR){
             spdlog::info("task failed on worker thread {}", localWorkerId);
