@@ -1,9 +1,10 @@
 #ifndef DOWNLOADMANAGER_APPLICATION_H
 #define DOWNLOADMANAGER_APPLICATION_H
 
-#include <spdlog/spdlog.h>
+#include "spdlog/spdlog.h"
 #include "window/appWindow.h"
 #include "ui/ui.h"
+#include "download/downloadManager.h"
 
 class Application {
 public:
@@ -17,6 +18,7 @@ private:
 private:
     AppWindow window;
     Ui ui;
+    DownloadManager downloadManager;
 };
 
 
