@@ -17,7 +17,7 @@ public:
 private:
     ThreadSafeQueue<DownloadTask>& globalTaskQueue;
     std::atomic_bool& done;
-    inline static int workerNum{0};
+    inline static int workerNum{0}; //debug
 };
 
 

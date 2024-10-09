@@ -30,7 +30,7 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     ImGui::SetNextWindowPos(ImVec2(0.0f,0.0f));
     ImGui::SetNextWindowSize(ImVec2(screenSize.first, screenSize.second));
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.5f, 0.0f, 0.0f, 1.0f));
-    ImGuiWindowFlags background = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs;
+    ImGuiWindowFlags background = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration;
     ImGui::Begin("Background", nullptr, background);
     ImGui::End(); //end of background window pane --------------------------------------------------------------------
 
@@ -46,7 +46,20 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     //"adding new download" button
     ImGui::SetCursorPos(ImVec2(37.5f, 37.5f));
     if(ImGui::Button("+", ImVec2(50, 50))){
+        ImGui::OpenPopup("Add-Download");
+    }
 
+    //create popup for download in center
+    auto center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    static std::string downloadURL{};
+    if(ImGui::BeginPopupModal("Add-Download", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDecoration)){
+        ImGui::SetNextItemWidth(360.0f);
+        ImGui::InputText("", &downloadURL);
+        if(ImGui::Button("Add", ImVec2(120,0))){ImGui::CloseCurrentPopup();}
+        ImGui::SameLine(ImGui::GetContentRegionAvail().x - 112.0f, 0.0f);
+        if(ImGui::Button("Close", ImVec2(120,0))){ImGui::CloseCurrentPopup();}
+        ImGui::EndPopup();
     }
 
     //"resume selected downloads" button

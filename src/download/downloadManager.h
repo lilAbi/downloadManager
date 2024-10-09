@@ -8,10 +8,7 @@
 //orchestrates the downloading system.
 class DownloadManager {
 public:
-    DownloadManager(){
-        auto* ptr = &downloadQueue;
-        spdlog::info("task queue ptr {}", fmt::ptr(ptr));
-    };
+    DownloadManager() = default;
     ~DownloadManager() = default;
 
     void shutdown(){

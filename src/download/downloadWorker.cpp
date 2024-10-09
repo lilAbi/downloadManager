@@ -6,22 +6,21 @@ DownloadWorker::DownloadWorker(ThreadSafeQueue<DownloadTask> &tq, std::atomic_bo
 void DownloadWorker::operator()() {
     int localWorkerId = workerNum++;
     spdlog::info("Starting worker thread {}", localWorkerId);
-    auto* queuePtr = &globalTaskQueue;
-    spdlog::info("worker thread {} queue ptr {}", localWorkerId, fmt::ptr(queuePtr));
     //setup libcurl library
 
     while(!done){
-        //try to pop downloaditem from task
-        spdlog::info("work loop start on worker thread {}", localWorkerId);
+        spdlog::info("Grabbing task from work queue on worker thread {}", localWorkerId);
 
+        //local variable to hold task
         DownloadTask task;
+
+        //wait for a task to be free
         globalTaskQueue.waitAndPop(task, done);
+        if(done) break; //if application is done quit
 
         if(task.status == DownloadStatus::ERROR){
             spdlog::info("task failed on worker thread {}", localWorkerId);
         }
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
 
 }
