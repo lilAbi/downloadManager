@@ -2,14 +2,16 @@
 #define DOWNLOADMANAGER_JOINTHREADS_H
 
 #include <thread>
+#include "spdlog/spdlog.h";
 
 class JoinThreads{
 public:
     explicit JoinThreads(std::vector<std::thread>& threadList): threads(threadList) {}
     ~JoinThreads() {
         for (auto& thread : threads){
-            if(thread.joinable())
+            if(thread.joinable()){
                 thread.join();
+            }
         }
     }
 private:

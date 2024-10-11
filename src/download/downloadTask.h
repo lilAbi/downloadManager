@@ -13,9 +13,9 @@ enum class DownloadStatus {
 };
 
 struct DownloadTask{
-    std::string url;
-    std::string outputPath;
-    float progress;
+    std::string url{"noUrl"};
+    std::string outputPath{"noOutput"};
+    float progress{0.0f};
     DownloadStatus status{DownloadStatus::ERROR};
 };
 

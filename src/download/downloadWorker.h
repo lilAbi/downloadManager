@@ -6,16 +6,18 @@
 #include <chrono>
 #include "spdlog/spdlog.h"
 #include "utility/threadSafeQueue.h"
+#include "utility/threadSafeVector.h"
 #include "downloadTask.h"
 
 class DownloadWorker {
 public:
-    DownloadWorker(ThreadSafeQueue<DownloadTask>& tq, std::atomic_bool& globalDone);
+    DownloadWorker(ThreadSafeQueue<DownloadTask>& queue, ThreadSafeVector<DownloadTask>& downloadListVec, std::atomic_bool& globalDone);
     ~DownloadWorker() = default;
 
     void operator() ();
 private:
     ThreadSafeQueue<DownloadTask>& globalTaskQueue;
+    ThreadSafeVector<DownloadTask>& downloadVec;
     std::atomic_bool& done;
     inline static int workerNum{0}; //debug
 };

@@ -7,7 +7,7 @@
 
 class ThreadPool {
 public:
-    explicit ThreadPool(ThreadSafeQueue<DownloadTask>& tq);
+    explicit ThreadPool(ThreadSafeQueue<DownloadTask>& queue, ThreadSafeVector<DownloadTask>& vector);
     ~ThreadPool();
 
 private:

@@ -56,6 +56,15 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     if(ImGui::BeginPopupModal("Add-Download", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDecoration)){
         ImGui::SetNextItemWidth(360.0f);
         ImGui::InputText("", &downloadURL);
+
+        /*
+        if(downloadManager->validateURL(inputText)){
+            //begin download
+        } else {
+            //display warning
+        }
+         */
+
         if(ImGui::Button("Add", ImVec2(120,0))){ImGui::CloseCurrentPopup();}
         ImGui::SameLine(ImGui::GetContentRegionAvail().x - 112.0f, 0.0f);
         if(ImGui::Button("Close", ImVec2(120,0))){ImGui::CloseCurrentPopup();}

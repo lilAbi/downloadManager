@@ -1,9 +1,10 @@
 #ifndef DOWNLOADMANAGER_DOWNLOADMANAGER_H
 #define DOWNLOADMANAGER_DOWNLOADMANAGER_H
 
-#include "utility/threadSafeQueue.h"
 #include "downloadTask.h"
+#include "utility/threadSafeQueue.h"
 #include "utility/threadPool.h"
+#include "utility/threadSafeVector.h"
 
 //orchestrates the downloading system.
 class DownloadManager {
@@ -17,6 +18,7 @@ public:
 
 private:
     ThreadSafeQueue<DownloadTask> downloadQueue{};
+    ThreadSafeVector<DownloadTask> downloadList{};
     ThreadPool threadPool{downloadQueue};
     //TaskSchedular DownloadQueue;
     //ThreadSafe Downloadabel queue;
