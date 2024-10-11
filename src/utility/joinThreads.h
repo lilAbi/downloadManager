@@ -2,7 +2,7 @@
 #define DOWNLOADMANAGER_JOINTHREADS_H
 
 #include <thread>
-#include "spdlog/spdlog.h";
+#include "spdlog/spdlog.h"
 
 class JoinThreads{
 public:
