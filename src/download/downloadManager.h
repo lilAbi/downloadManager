@@ -19,7 +19,7 @@ public:
 private:
     ThreadSafeQueue<DownloadTask> downloadQueue{};
     ThreadSafeVector<DownloadTask> downloadList{};
-    ThreadPool threadPool{downloadQueue};
+    ThreadPool threadPool{downloadQueue, downloadList};
     //TaskSchedular DownloadQueue;
     //ThreadSafe Downloadabel queue;
 
