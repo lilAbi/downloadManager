@@ -8,6 +8,7 @@ void DownloadWorker::operator()() {
     int localWorkerId = workerNum++;
     spdlog::info("Starting worker thread {}", localWorkerId);
     //setup libcurl library
+    //void* handle = curl_easy_init();
 
     while(!done){
         spdlog::info("Grabbing task from work queue on worker thread {}", localWorkerId);

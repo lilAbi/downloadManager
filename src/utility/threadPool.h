@@ -10,10 +10,11 @@ public:
     explicit ThreadPool(ThreadSafeQueue<DownloadTask>& queue, ThreadSafeVector<DownloadTask>& vector);
     ~ThreadPool();
 
+public:
+    std::atomic_bool done{false};
 private:
     std::vector<std::thread> threads{};
     JoinThreads joinThreads{threads};
-    std::atomic_bool done{false};
 };
 
 

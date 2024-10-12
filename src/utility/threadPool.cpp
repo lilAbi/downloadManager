@@ -13,5 +13,4 @@ ThreadPool::ThreadPool(ThreadSafeQueue<DownloadTask>& queue, ThreadSafeVector<Do
 }
 
 ThreadPool::~ThreadPool() {
-    done = true;
 }

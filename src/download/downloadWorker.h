@@ -7,12 +7,15 @@
 #include "spdlog/spdlog.h"
 #include "utility/threadSafeQueue.h"
 #include "utility/threadSafeVector.h"
+#include "curl/curl.h"
 #include "downloadTask.h"
 
 class DownloadWorker {
 public:
     DownloadWorker(ThreadSafeQueue<DownloadTask>& queue, ThreadSafeVector<DownloadTask>& downloadListVec, std::atomic_bool& globalDone);
-    ~DownloadWorker() = default;
+    ~DownloadWorker(){
+        spdlog::critical("shutting down worker thread {}", workerNum);
+    };
 
     void operator() ();
 private:

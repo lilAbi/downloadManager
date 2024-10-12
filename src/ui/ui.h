@@ -7,6 +7,7 @@
 #include "imgui_stdlib.h"
 #include "GLFW/glfw3.h"
 #include "spdlog/spdlog.h"
+#include "download/downloadManager.h"
 
 #include <tuple>
 
@@ -18,7 +19,7 @@ public:
     //imgui new frame internal setup
     void startUIFrame();
     //actual drawing logic
-    void drawUi(std::pair<int,int> screenSize);
+    void drawUi(std::pair<int,int> screenSize, DownloadManager& dm);
     //submit our ui data to gpu
     void endUIFrame();
     //clean up imgui stuff

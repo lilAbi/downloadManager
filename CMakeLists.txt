@@ -13,6 +13,7 @@ find_package(imgui REQUIRED)
 find_package(glad REQUIRED)
 find_package(glm REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(CURL REQUIRED)
 
 include_directories(
         ${glfw3_INCLUDE_DIR}
@@ -20,6 +21,7 @@ include_directories(
         ${imgui_INCLUDE_DIR}
         ${glm_INCLUDE_DIR}
         ${spdlog_INCLUDE_DIR}
+        ${curl_INCLUDE_DIR}
 )
 
 file(GLOB sources CONFIGURE_DEPENDS
@@ -40,4 +42,5 @@ target_link_libraries(downloadManager PUBLIC
         glad::glad
         glm::glm
         spdlog::spdlog
+        curl
 )

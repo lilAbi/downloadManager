@@ -10,9 +10,14 @@
 class DownloadManager {
 public:
     DownloadManager() = default;
-    ~DownloadManager() = default;
+    ~DownloadManager(){spdlog::critical("Shutting DownloadManager");};
+
+    void addTask(DownloadTask&& task);
+
+    std::vector<DownloadTask> getDownloadList();
 
     void shutdown(){
+        threadPool.done = true;
         downloadQueue.terminate();
     };
 

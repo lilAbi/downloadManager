@@ -34,10 +34,10 @@ public:
 public:
 #ifdef __APPLE__
     int width{1920/2}, height{1080/2};
-    int framebufferWidth{}, framebufferHeight{};
 #else
     int width{1920}, height{1080};
 #endif
+    int framebufferWidth{}, framebufferHeight{};
     std::shared_ptr<GLFWwindow> windowPtr;
 };
 

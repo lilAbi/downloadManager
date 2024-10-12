@@ -25,7 +25,7 @@ void Ui::startUIFrame() {
     ImGui::NewFrame();
 }
 
-void Ui::drawUi(std::pair<int,int> screenSize) {
+void Ui::drawUi(std::pair<int,int> screenSize, DownloadManager& dm) {
     //background window pane ------------------------------------------------------------------------------------------
     ImGui::SetNextWindowPos(ImVec2(0.0f,0.0f));
     ImGui::SetNextWindowSize(ImVec2(screenSize.first, screenSize.second));
@@ -57,17 +57,15 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
         ImGui::SetNextItemWidth(360.0f);
         ImGui::InputText("", &downloadURL);
 
-        /*
-        if(downloadManager->validateURL(inputText)){
-            //begin download
-        } else {
-            //display warning
+        if(ImGui::Button("Add", ImVec2(120,0))){
+            dm.addTask(DownloadTask{.url = downloadURL});
+            ImGui::CloseCurrentPopup();
         }
-         */
 
-        if(ImGui::Button("Add", ImVec2(120,0))){ImGui::CloseCurrentPopup();}
         ImGui::SameLine(ImGui::GetContentRegionAvail().x - 112.0f, 0.0f);
+
         if(ImGui::Button("Close", ImVec2(120,0))){ImGui::CloseCurrentPopup();}
+
         ImGui::EndPopup();
     }
 
@@ -122,24 +120,25 @@ void Ui::drawUi(std::pair<int,int> screenSize) {
     ImGui::EndChild();
     ImGui::BeginChild("ScrollArea", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
-    static std::vector<std::pair<std::string,float>> downloads = {{"File1.zip", 0.5f}, {"File2.zip", 0.75f}};
-    for(auto& download : downloads){
+    //static std::vector<std::pair<std::string,float>> downloads = {{"File1.zip", 0.5f}, {"File2.zip", 0.75f}};
+    std::vector<DownloadTask> downloadListCopy = std::move(dm.getDownloadList());
+    for(auto& download : downloadListCopy){
 
         ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.9f, 0.3f, 0.1f, 1.0f));
-        std::string childLabel = download.first + "-child";
+        std::string childLabel = download.url + "-child";
         ImGui::BeginChild(childLabel.c_str(), ImVec2(0, 80.0f), 0, 0);
 
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
 
         bool checkbox = true;
-        std::string checkboxLabel = download.first + "-checkbox";
+        std::string checkboxLabel = download.url + "-checkbox";
         ImGui::Checkbox(childLabel.c_str(), &checkbox);
 
         ImGui::SameLine(0, 100.0f);
 
         ImGui::SetNextItemWidth(200.0f);
-        std::string inputTextLabel = download.first + "-textbox";
-        ImGui::InputText(inputTextLabel.c_str(), &download.first);
+        std::string inputTextLabel = download.outputPath + "-textbox";
+        ImGui::InputText(inputTextLabel.c_str(), &download.outputPath);
 
         ImGui::SameLine(0, 100.0f);
         ImGui::ProgressBar(-1.0f * (float)ImGui::GetTime(), ImVec2(-FLT_MIN, 0),  "Downloading..");

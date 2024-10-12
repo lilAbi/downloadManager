@@ -36,7 +36,7 @@ void Application::run() {
 
         ui.startUIFrame();
 
-        ui.drawUi(window.getScreenSize());
+        ui.drawUi(window.getScreenSize(), downloadManager);
 
         ui.endUIFrame();
 
@@ -44,8 +44,10 @@ void Application::run() {
         glfwSwapBuffers(glfwWindowPtr.get());
     }
 
+    spdlog::critical("Starting Application Shutdown");
     ui.cleanUp();
     downloadManager.shutdown();
+    spdlog::critical("Finished Application Shutdown");
 }
 
 void Application::processInput() {

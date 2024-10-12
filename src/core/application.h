@@ -9,6 +9,7 @@
 class Application {
 public:
     Application() = default;
+    ~Application() {spdlog::critical("Destroying Application Class");}
     //initialize download manager subsystems
     bool init();
     //run application loop
