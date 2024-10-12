@@ -58,7 +58,9 @@ void Ui::drawUi(std::pair<int,int> screenSize, DownloadManager& dm) {
         ImGui::InputText("", &downloadURL);
 
         if(ImGui::Button("Add", ImVec2(120,0))){
-            dm.addTask(DownloadTask{.url = downloadURL});
+            //sanitize url
+            DownloadTask task = dm.generateDownloadTaskFromUrl(downloadURL);
+            dm.addTask(std::move(task));
             ImGui::CloseCurrentPopup();
         }
 
@@ -120,28 +122,29 @@ void Ui::drawUi(std::pair<int,int> screenSize, DownloadManager& dm) {
     ImGui::EndChild();
     ImGui::BeginChild("ScrollArea", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
-    //static std::vector<std::pair<std::string,float>> downloads = {{"File1.zip", 0.5f}, {"File2.zip", 0.75f}};
+    //get a copy of the download list
     std::vector<DownloadTask> downloadListCopy = std::move(dm.getDownloadList());
     for(auto& download : downloadListCopy){
 
         ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.9f, 0.3f, 0.1f, 1.0f));
-        std::string childLabel = download.url + "-child";
+        std::string childLabel = "##On" + download.name + "child";
         ImGui::BeginChild(childLabel.c_str(), ImVec2(0, 80.0f), 0, 0);
 
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
 
         bool checkbox = true;
-        std::string checkboxLabel = download.url + "-checkbox";
-        ImGui::Checkbox(childLabel.c_str(), &checkbox);
+        std::string checkboxLabel = "##On" + download.name + "checkbox";
+        //ImGui::Checkbox(childLabel.c_str(), &checkbox);
+        ImGui::Checkbox(checkboxLabel.c_str(), &checkbox);
 
         ImGui::SameLine(0, 100.0f);
 
         ImGui::SetNextItemWidth(200.0f);
-        std::string inputTextLabel = download.outputPath + "-textbox";
-        ImGui::InputText(inputTextLabel.c_str(), &download.outputPath);
+        std::string inputTextLabel = "##On" + download.name + "label";
+        ImGui::InputText(inputTextLabel.c_str(), &download.name);
 
-        ImGui::SameLine(0, 100.0f);
-        ImGui::ProgressBar(-1.0f * (float)ImGui::GetTime(), ImVec2(-FLT_MIN, 0),  "Downloading..");
+        ImGui::SameLine(0, 200.0f);
+        ImGui::ProgressBar(-1.0f * (float)ImGui::GetTime(), ImVec2(ImGui::GetContentRegionAvail().x, 0),  "Downloading..");
 
         ImGui::EndChild();
 

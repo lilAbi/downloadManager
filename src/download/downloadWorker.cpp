@@ -8,7 +8,7 @@ void DownloadWorker::operator()() {
     int localWorkerId = workerNum++;
     spdlog::info("Starting worker thread {}", localWorkerId);
     //setup libcurl library
-    //void* handle = curl_easy_init();
+    void* curlHandle = curl_easy_init();
 
     while(!done){
         spdlog::info("Grabbing task from work queue on worker thread {}", localWorkerId);
@@ -20,13 +20,20 @@ void DownloadWorker::operator()() {
         globalTaskQueue.waitAndPop(task, done);
         if(done) break; //if application is done quit
 
+        /*
+        if(curlHandle){
+
+            //open a file
+
+
+        } else {
+            spdlog::critical("curl handle error");
+            continue;
+        }
+         */
         int index = downloadVec.pushItem(task);
 
-        //find some way to get absolute position in queue (probably
 
-        if(task.status == DownloadStatus::ERROR){
-            spdlog::info("task failed on worker thread {}", localWorkerId);
-        }
     }
 
 }

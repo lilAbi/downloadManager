@@ -7,6 +7,7 @@
 #include "utility/threadSafeVector.h"
 
 //orchestrates the downloading system.
+//http://ipv4.download.thinkbroadband.com:8080/1GB.zip
 class DownloadManager {
 public:
     DownloadManager() = default;
@@ -15,6 +16,8 @@ public:
     void addTask(DownloadTask&& task);
 
     std::vector<DownloadTask> getDownloadList();
+
+    DownloadTask generateDownloadTaskFromUrl(std::string link);
 
     void shutdown(){
         threadPool.done = true;
