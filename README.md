@@ -12,5 +12,10 @@ conan install . --output-folder=<cmake/build/directory>/build --build=missing
 
 3. run cmake and build app
 
-Last thing to do:
+Features:
+ - ui
+ - multidownload
+
+Things to do:
+ - a lot 
 

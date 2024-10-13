@@ -144,9 +144,7 @@ void Ui::drawUi(std::pair<int,int> screenSize, DownloadManager& dm) {
 
         ImGui::SameLine(0, 200.0f);
 
-        spdlog::info("progress {}", download.progress);
-
-        ImGui::ProgressBar(download.progress, ImVec2(ImGui::GetContentRegionAvail().x, 0),  "Downloading..");
+        ImGui::ProgressBar(download.progress, ImVec2(ImGui::GetContentRegionAvail().x - 100, 0),  "Downloading..");
 
         ImGui::EndChild();
 
