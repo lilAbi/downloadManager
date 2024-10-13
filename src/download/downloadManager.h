@@ -11,26 +11,17 @@
 class DownloadManager {
 public:
     DownloadManager() = default;
-    ~DownloadManager(){spdlog::critical("Shutting DownloadManager");};
+    ~DownloadManager() = default;
 
     void addTask(DownloadTask&& task);
-
     std::vector<DownloadTask> getDownloadList();
-
     DownloadTask generateDownloadTaskFromUrl(std::string link);
-
-    void shutdown(){
-        threadPool.done = true;
-        downloadQueue.terminate();
-    };
+    void shutdown();
 
 private:
     ThreadSafeQueue<DownloadTask> downloadQueue{};
     ThreadSafeVector<DownloadTask> downloadList{};
     ThreadPool threadPool{downloadQueue, downloadList};
-    //TaskSchedular DownloadQueue;
-    //ThreadSafe Downloadabel queue;
-
 };
 
 

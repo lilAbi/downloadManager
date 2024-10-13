@@ -5,7 +5,7 @@ void DownloadManager::addTask(DownloadTask&& task) {
 }
 
 std::vector<DownloadTask> DownloadManager::getDownloadList() {
-    return std::move(downloadList.getDataVector());
+    return downloadList.getDataVector();
 }
 
 DownloadTask DownloadManager::generateDownloadTaskFromUrl(std::string link) {
@@ -22,3 +22,8 @@ DownloadTask DownloadManager::generateDownloadTaskFromUrl(std::string link) {
 
     return task;
 }
+
+void DownloadManager::shutdown(){
+    threadPool.done = true;
+    downloadQueue.terminate();
+};

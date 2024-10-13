@@ -21,7 +21,7 @@ public:
     bool updateItem(T& value, int index);
 
     //get item at index
-    T& getItem(int index);
+    T* getItem(int index);
 
     //get a copy of the under lying pointer
     std::vector<T> getDataVector();
@@ -37,7 +37,7 @@ template<typename T>
 int ThreadSafeVector<T>::pushItem(T &value) {
     std::lock_guard<std::mutex> lock(mutex);
     data.push_back(value);
-    return data.size();
+    return data.size()-1;
 }
 
 template<typename T>
@@ -51,12 +51,13 @@ bool ThreadSafeVector<T>::updateItem(T &value, int index) {
 }
 
 template<typename T>
-T& ThreadSafeVector<T>::getItem(int index) {
+T* ThreadSafeVector<T>::getItem(int index) {
     std::lock_guard<std::mutex> lock(mutex);
-    if(data.size() > index){
-        return T{};
+    if(data.size() < index){
+        return nullptr;
     }
-    return data[index];
+    T* ptr = &data[index];
+    return ptr;
 }
 
 template<typename T>

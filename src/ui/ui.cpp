@@ -52,7 +52,7 @@ void Ui::drawUi(std::pair<int,int> screenSize, DownloadManager& dm) {
     //create popup for download in center
     auto center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    static std::string downloadURL{};
+    static std::string downloadURL{"https://sabnzbd.org/tests/internetspeed/50MB.bin"};
     if(ImGui::BeginPopupModal("Add-Download", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDecoration)){
         ImGui::SetNextItemWidth(360.0f);
         ImGui::InputText("", &downloadURL);
@@ -123,7 +123,7 @@ void Ui::drawUi(std::pair<int,int> screenSize, DownloadManager& dm) {
     ImGui::BeginChild("ScrollArea", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
     //get a copy of the download list
-    std::vector<DownloadTask> downloadListCopy = std::move(dm.getDownloadList());
+    std::vector<DownloadTask> downloadListCopy = dm.getDownloadList();
     for(auto& download : downloadListCopy){
 
         ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.9f, 0.3f, 0.1f, 1.0f));
@@ -134,7 +134,6 @@ void Ui::drawUi(std::pair<int,int> screenSize, DownloadManager& dm) {
 
         bool checkbox = true;
         std::string checkboxLabel = "##On" + download.name + "checkbox";
-        //ImGui::Checkbox(childLabel.c_str(), &checkbox);
         ImGui::Checkbox(checkboxLabel.c_str(), &checkbox);
 
         ImGui::SameLine(0, 100.0f);
@@ -144,7 +143,10 @@ void Ui::drawUi(std::pair<int,int> screenSize, DownloadManager& dm) {
         ImGui::InputText(inputTextLabel.c_str(), &download.name);
 
         ImGui::SameLine(0, 200.0f);
-        ImGui::ProgressBar(-1.0f * (float)ImGui::GetTime(), ImVec2(ImGui::GetContentRegionAvail().x, 0),  "Downloading..");
+
+        spdlog::info("progress {}", download.progress);
+
+        ImGui::ProgressBar(download.progress, ImVec2(ImGui::GetContentRegionAvail().x, 0),  "Downloading..");
 
         ImGui::EndChild();
 
